@@ -1,0 +1,17 @@
+# Build directories
+/cmake-build-debug/
+
+# Executable binaries (Linux, macOS)
+*.out
+*.exe
+*.bin
+
+# Object files
+*.o
+*.obj
+
+# Log files
+*.log
+
+# Core dumps
+core

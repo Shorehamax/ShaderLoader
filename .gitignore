@@ -1,5 +1,6 @@
 # Build directories
 /cmake-build-debug/
+/.vscode/
 
 # Executable binaries (Linux, macOS)
 *.out

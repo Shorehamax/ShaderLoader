@@ -163,15 +163,20 @@ private:
     void cleanup() {
         cleanupSwapChain();
 
-        for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+        // Fix: Destroy semaphores with correct loop count
+        for (size_t i = 0; i < swapChainImages.size(); i++) {
             device.destroySemaphore(renderFinishedSemaphore[i]);
             device.destroySemaphore(presentCompleteSemaphore[i]);
+        }
+
+        for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
             device.destroyFence(inFlightFences[i]);
         }
 
         device.destroyCommandPool(commandPool);
         device.destroyPipeline(graphicsPipeline);
         device.destroyPipelineLayout(pipelineLayout);
+        device.destroyRenderPass(renderPass);
         device.destroy();
 
         // Skip debug messenger cleanup since we disabled it
@@ -384,9 +389,9 @@ private:
     }
 
     void createGraphicsPipeline() {
-        // Load separate vertex and fragment shaders
-        auto vertShaderCode = readFile("../shaders/triangle.vert.spv");
-        auto fragShaderCode = readFile("../shaders/triangle.frag.spv");
+        // Load custom vertex and fragment shaders - users can easily edit these!
+        auto vertShaderCode = readFile("../shaders/custom_vertex.vert.spv");
+        auto fragShaderCode = readFile("../shaders/custom_fragment.frag.spv");
 
         vk::ShaderModule vertShaderModule = createShaderModule(vertShaderCode);
         vk::ShaderModule fragShaderModule = createShaderModule(fragShaderCode);
@@ -592,7 +597,7 @@ private:
         vk::Rect2D scissor({0, 0}, swapChainExtent);
         commandBuffers[currentFrame].setScissor(0, 1, &scissor);
 
-        // Draw triangle without vertex/index buffers since the shader has hardcoded vertices
+        // Draw triangle with only 3 vertices since the new shader uses a simple triangle
         commandBuffers[currentFrame].draw(3, 1, 0, 0);
 
         commandBuffers[currentFrame].endRenderPass();

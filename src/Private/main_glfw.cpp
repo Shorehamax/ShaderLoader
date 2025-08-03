@@ -131,7 +131,7 @@ private:
         ShaderLoader::ShaderLoader loader(std::move(compiler));
 
         // Load vertex shader
-        std::string vertexPath = "/home/charlie/CLionProjects/ShaderLoader/shaders/triangle.vert.spv";
+        std::string vertexPath = "/home/charlie/CLionProjects/ShaderLoader/shaders/custom_vertex.vert.spv";
         if (loader.loadShader(vertexPath)) {
             auto* vertexModule = loader.getModule(vertexPath);
             if (vertexModule && !vertexModule->spirv.empty()) {
@@ -141,7 +141,7 @@ private:
         }
 
         // Load fragment shader
-        std::string fragmentPath = "/home/charlie/CLionProjects/ShaderLoader/shaders/triangle.frag.spv";
+        std::string fragmentPath = "/home/charlie/CLionProjects/ShaderLoader/shaders/custom_fragment.frag.spv";
         if (loader.loadShader(fragmentPath)) {
             auto* fragmentModule = loader.getModule(fragmentPath);
             if (fragmentModule && !fragmentModule->spirv.empty()) {

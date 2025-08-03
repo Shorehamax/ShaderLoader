@@ -1,6 +1,9 @@
 # Build directories
 /cmake-build-debug/
 /.vscode/
+/cmake-build-release/
+/cmake-build-relwithdebinfo/
+/release/
 
 # Executable binaries (Linux, macOS)
 *.out

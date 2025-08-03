@@ -1,0 +1,32 @@
+#version 450
+
+// ============================================================
+// CUSTOM COMPUTE SHADER - PASTE YOUR CODE BELOW THIS LINE
+// ============================================================
+// Instructions:
+// 1. Replace the code below with your custom compute shader
+// 2. This runs on the GPU for parallel computation
+// 3. Use layout(local_size_x, y, z) to define work group size
+// 4. Save this file and the app will compile it automatically!
+// ============================================================
+
+layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+
+// Example: Simple buffer for demonstration
+layout(std430, binding = 0) buffer DataBuffer {
+    float data[];
+};
+
+void main() {
+    // Get current thread index
+    uint index = gl_GlobalInvocationID.x;
+
+    // Example: Square each value in the buffer
+    if (index < data.length()) {
+        data[index] = data[index] * data[index];
+    }
+}
+
+// ============================================================
+// END OF CUSTOM COMPUTE SHADER CODE
+// ============================================================

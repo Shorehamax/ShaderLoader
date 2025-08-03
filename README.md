@@ -6,11 +6,8 @@ A powerful, easy-to-use Vulkan application for loading and testing custom shader
 
 ## 🚀 Features
 
-- **🔥 Real-time Shader Loading** - Load and test vertex, fragment, and compute shaders instantly
 - **🎯 Easy Template System** - Pre-made shader templates with clear instructions
-- **⚡ Hot Reload** - Edit shaders and see changes immediately
 - **🖥️ Cross-Platform** - Built with modern Vulkan API
-- **🎨 Beautiful Samples** - Includes stunning example shaders to get you started
 - **📁 Simple File Structure** - Just edit files and run!
 
 ## 📦 What's Included
@@ -166,34 +163,6 @@ void main() {
 - Use `gl_FragCoord` for screen position effects
 - Add noise, patterns, or animations here
 
-## 🎯 Advanced Examples
-
-### Animated Rotating Triangle
-```glsl
-// In vertex shader main()
-float time = float(gl_VertexIndex) * 0.1;
-float angle = time;
-mat2 rotation = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
-vec2 pos = rotation * positions[gl_VertexIndex];
-gl_Position = vec4(pos, 0.0, 1.0);
-```
-
-### Psychedelic Fragment Effect
-```glsl
-// In fragment shader main()
-vec2 uv = gl_FragCoord.xy * 0.01;
-float wave = sin(uv.x * 10.0) * sin(uv.y * 10.0);
-vec3 color = fragColor + wave * 0.5;
-outColor = vec4(color, 1.0);
-```
-
-### Pulsing Colors
-```glsl
-// In fragment shader main()
-float pulse = sin(gl_FragCoord.x * 0.05 + gl_FragCoord.y * 0.03) * 0.5 + 0.5;
-outColor = vec4(fragColor * pulse, 1.0);
-```
-
 ## 🔧 Troubleshooting
 
 ### Black Screen?
@@ -238,43 +207,8 @@ texture()                  // Sample textures
 normalize()                // Normalize vectors
 ```
 
-## 🏗️ Building from Source
-
-If you want to modify the application itself:
-
-```bash
-# Clone and build
-git clone <your-repo>
-cd ShaderLoader
-mkdir build && cd build
-cmake ..
-make
-
-# Copy executable and shaders
-cp app ../release/ShaderLoader/
-cp -r ../shaders ../release/ShaderLoader/
-```
-
 ## 📄 License
 
 MIT License - Feel free to use this for learning, projects, or commercial work!
 
-## 🤝 Contributing
-
-Found a bug? Want to add features? Pull requests welcome!
-
-## 💫 Gallery
-
-Try these shader combinations for stunning effects:
-
-- **🌈 Rainbow Triangle:** Cycle colors over time
-- **⚡ Electric Effect:** Add noise and lightning patterns  
-- **🌊 Wave Distortion:** Animate vertex positions with sine waves
-- **🎆 Particle System:** Use fragment shader for particle effects
-- **🔥 Fire Simulation:** Combine noise with color gradients
-
----
-
 **Happy Shader Coding!** 🎨✨
-
-*Made with ❤️ for the graphics programming community*

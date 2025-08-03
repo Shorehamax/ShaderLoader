@@ -1,50 +1,23 @@
 cmake_minimum_required(VERSION 3.16)
-project(ShaderPlayground LANGUAGES CXX)
+project(ShaderLoader)
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find Vulkan SDK
+# Find required packages
 find_package(Vulkan REQUIRED)
+find_package(glfw3 REQUIRED)
 
-# Qt6 Widgets
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+# Main application
+add_executable(app src/Private/main_triangle_fixed.cpp)
 
-# Enable CMake's Automoc feature for Qt
-set(CMAKE_AUTOMOC ON)
-
-# Define sources: private CPPs and public headers
-file(GLOB_RECURSE CPP_SOURCES
-        ${CMAKE_SOURCE_DIR}/src/*/Private/*.cpp
-)
-file(GLOB_RECURSE HEADER_FILES
-        ${CMAKE_SOURCE_DIR}/src/*/Public/*.h
+# Link libraries to the main application
+target_link_libraries(app
+    Vulkan::Vulkan
+    glfw
 )
 
-# Add the main.cpp file specifically
-list(APPEND CPP_SOURCES ${CMAKE_SOURCE_DIR}/src/Private/main.cpp)
-list(APPEND CPP_SOURCES ${CMAKE_SOURCE_DIR}/src/VulkanCore/Private/MainWindow.cpp)
-
-add_executable(app ${CPP_SOURCES} ${HEADER_FILES}
-        src/VulkanCore/Public/QtVulkanWindow.h
-        src/VulkanCore/Private/QtVulkanWindow.cpp
+# Set output directory
+set_target_properties(app PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
-
-# Include public directories
-target_include_directories(app PRIVATE
-        ${Vulkan_INCLUDE_DIR}
-        ${Qt6Widgets_INCLUDE_DIRS}
-        ${CMAKE_SOURCE_DIR}/src/FileWatcher/Public
-        ${CMAKE_SOURCE_DIR}/src/ShaderLoader/Public
-        ${CMAKE_SOURCE_DIR}/src/VulkanCore/Public
-)
-
-# Link libraries
-target_link_libraries(app PRIVATE
-        ${Vulkan_LIBRARIES}
-        Qt6::Widgets
-)
-
-# Enable C++23 features
-target_compile_features(app PRIVATE cxx_std_23)
